@@ -34,22 +34,33 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const filterUsers = () => {
-      if (name === '') {
-        setSearchResults(allUsers);
-        return;
+    const filterUsers = async () => {
+      try {
+        if (name === '') {
+          setSearchResults(allUsers);
+          return;
+        }
+
+        setLoading(true);
+
+
+        const filterResponse = await axiosInstance.get(`/search/users?q=${name}&per_page=100`);
+
+        console.log('Filter response:', filterResponse.data.items);
+
+        setSearchResults(filterResponse.data.items);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error filtering user data:', error);
+        setSearchResults([]);
+        setLoading(false);
+        setErrorMessage('Error filtering user data. Please try again.');
       }
-
-      const filteredUsers = allUsers.filter(user =>
-        user.login.toLowerCase().includes(name.toLowerCase())
-      );
-
-      setSearchResults(filteredUsers);
     };
 
     const debounce = setTimeout(() => {
       filterUsers();
-    }, 300);
+    }, 1000);
 
     return () => clearTimeout(debounce);
   }, [name, allUsers]);

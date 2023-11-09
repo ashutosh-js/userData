@@ -1,0 +1,78 @@
+.userDataContainer {
+  background-color: #a69f9f;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+}
+
+.userAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  border: 3px solid #fff;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.userInfo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.followers_Following {
+  display: flex;
+  justify-content: center;
+}
+
+.followers, .following {
+  font-weight: bold;
+  margin: 0 16px;
+}
+
+.inputContainer {
+  margin: 20px 0;
+}
+
+.inputField {
+  width: 50%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+.inputField::placeholder {
+  color: #ccc;
+}
+
+
+
+/* UserList.css */
+.userlist_container {
+  max-height: 300px;
+  max-width: 735px;
+  overflow-y: auto;
+}
+
+.user_list {
+  cursor: pointer;
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+}
+
+.user_list:hover {
+  background-color: #f0f0f0;
+}
+
+

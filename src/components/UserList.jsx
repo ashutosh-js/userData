@@ -3,8 +3,7 @@ import { Card, Skeleton, Row, Col, Pagination, Result, Button } from 'antd';
 
 const { Meta } = Card;
 
-function UserList({ searchResults = [], handleUserClick, loading }) {
-  console.log("ss", searchResults)
+function UserList({ searchResults = [], loading }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 8;
 
@@ -15,6 +14,10 @@ function UserList({ searchResults = [], handleUserClick, loading }) {
 
   const onPageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const redirectToRepo = (repoUrl) => {
+    window.open(repoUrl, '_blank');
   };
 
   if (!loading && searchResults?.length === 0) {
@@ -34,13 +37,13 @@ function UserList({ searchResults = [], handleUserClick, loading }) {
           <Col key={user.id} xs={24} sm={12} md={8} lg={6}>
             <Skeleton loading={loading} active avatar paragraph={{ rows: 1 }}>
               <Card
+                hoverable
                 style={{ width: '100%', marginTop: '15px' }}
                 cover={<img alt={user.login} src={user?.avatar_url} />}
-                onClick={() => handleUserClick(user.repos_url)}
               >
-                <div style={{display:'flex', justifyContent:"space-around"}}>
-                  <Meta title={user.login} />
-                  <Button >Repo URl</Button>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                  <Meta style={{ marginTop: '2px' }} title={user.login} />
+                  <Button onClick={() => redirectToRepo(user.html_url)}>Repo URl</Button>
                 </div>
               </Card>
             </Skeleton>
@@ -48,14 +51,18 @@ function UserList({ searchResults = [], handleUserClick, loading }) {
         ))}
       </Row>
 
-      <Pagination
-        current={currentPage}
-        pageSize={pageSize}
-        total={searchResults?.length}
-        onChange={onPageChange}
-        style={{ textAlign: 'center', marginTop: '16px' }}
-      />
-
+      {!loading && (
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={searchResults?.length}
+          onChange={onPageChange}
+          showQuickJumper
+          showSizeChanger ={false}
+          responsive
+          style={{ textAlign: 'center', marginTop: '16px' }}
+        />
+      )}
     </div>
   );
 }
